@@ -1,79 +1,108 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/Hppw7Zh2)
-# Trabalho Final
+## Integrantes
 
-## Escopo e organização
+|Matrícula | Aluno | Turma |
+| -- | -- | -- |
+| 22/2029243  | Victor Hugo dos Santos Bernardes | 16h |
+| x | x | x |
 
-O trabalho é de tema livre dentro do escopo da disciplina de compiladores e
-consiste no desenvolvimento de alguma aplicação na área da disciplina (um
-interpretador para uma linguagem simples, compilador, analisadores de código,
-etc.)
+## Sobre o Projeto
 
-O trabalho pode ser feito em grupos de até 4 pessoas.
+Este projeto implementa um analisador sintático para arquivos no formato PDDL (Planning Domain Definition Language). O objetivo é validar a estrutura sintática dos arquivos `domain.pddl` e `problem.pddl`, utilizados na definição de domínios e problemas em planejadores automáticos. 
 
-## Estrutura
+A ferramenta realiza a Análise Léxica e a Análise Sintática, detectando e reportando erros estruturais com base nas regras da linguagem PDDL.
 
-Os trabalhos devem ser entregues na atividade própria no [github-classrrom](...).
-Cada repositório deve ter uma estrutura parecida com a delineada abaixo:
+## Linguagem Suportada
 
-* **README:** o arquivo README.md na base do repositório deve descrever os
-  detalhes da implementação do código. O README deve ter algumas seções 
-  obrigatórias:
-  - **Título**: nome do projeto
-  - **Integrantes**: lista com os nomes, matrículas e turma de cada integrante.
-  - **Introdução**: deve detalhar o que o projeto implementou, quais foram as
-    estratégias e algoritmos relevantes. Se o projeto implementa uma linguagem
-    não-comum ou um subconjunto de uma linguagem comum, deve conter alguns
-    exemplos de comandos nesta linguagem, descrendo a sua sintaxe e semântica,
-    quando necessário.
-  - **Instalação**: deve detalhar os passos para instalar as dependências e
-    rodar o código do projeto. Pode ser algo simples como *"Rode
-    `uv run lox hello.lox` para executar o interpretador."*, se a linguagem de
-    implementação permitir este tipo de facilidade.
+O compilador aceita uma linguagem compatível com a sintaxe básica do PDDL, com suporte para os seguintes elementos:
 
-    Você pode usar gerenciadores de pacotes específicos de linguagens populares
-    como uv, npm, cargo, etc, containers Docker/Podman, ou `.nix`.
-  - **Exemplos**: o projeto deve conter uma pasta "exemplos" com alguns arquivos
-    na linguagem de programação implementada. Deve conter exemplos com graus
-    variáveis de complexidade. Algo como: hello world, fibonacci, função
-    recursiva, alguma estrutura de dados e para finalizar um algoritmo um pouco
-    mais elaborado como ordenamento de listas, busca binária, etc.
-    
-    Note que isto é apenas um guia da ordem de dificuldade dos problemas.
-    Algumas linguagens sequer permitem a implementação de alguns dos exemplos
-    acima.
-  - **Referências**: descreva as referências que você utilizou para a
-    implementação da linguagem. Faça uma breve descrição do papel de cada
-    referência ou como ela foi usada no projeto. Caso você tenha usado algum 
-    código existente como referência, descreva as suas contribuições originais
-    para o projeto.
-  - **Estrutura do código**: faça uma descrição da estrutura geral do código
-    discutindo os módulos, classes, estruturas de dados ou funções principais. 
-    Explicite onde as etapas tradicionais de compilação (análise léxica, 
-    sintática, semântica, etc) são realizadas, quando relevante.
-  - **Bugs/Limitações/problemas conhecidos**: discuta as limitações do seu
-    projeto e problemas conhecidos e coisas que poderiam ser feitas para
-    melhorá-lo no futuro. Note: considere apenas melhorias incrementais e não
-    melhorias grandes como: "reimplementar tudo em Rust".
-* **Código:** O codigo fonte deve estar presente no repositório principal junto com
-  a declaração das suas dependências. Cada linguagem possui um mecanismo
-  específico para isso, mas seria algo como o arquivo pyproject.toml em Python
-  ou package.json no caso de Javascript.
+- **Definições de domínio e problema** com `define`, `domain`, `problem`.
+- **Seções estruturadas**, como `:requirements`, `:types`, `:predicates`, `:action`, `:parameters`, `:precondition` e `:effect`.
+- **Uso de símbolos e identificadores** com prefixo `?` para variáveis.
+- **Operadores lógicos** como `and`, `not`, e conectivos PDDL válidos.
 
-## Critérios
+### Exemplo:
 
-Cada trabalho começa com 100% e pode receber penalizações ou bônus de acordo com
-os critérios abaixo:
+```lisp
+(define (domain hello-world)
+  (:predicates (saudacao))
+  (:action dizer-ola
+    :precondition ()
+    :effect (saudacao)))
+```
 
-- Ausência do README: -50%
-- Instruções de instalação não funcionam: até -20%
-- Referências não atribuídas ou falta de referâncias: -10%
-- Código confuso ou mal organizado: até -15%
-- Falta de clareza em apresentar as técnicas e etapas de compilação: -15%
-- Bugs e limitações sérias na implementação: até -25%
-- Escopo reduzido, ou implementação insuficiente: até 25%
-- Uso de código não atribuído/plágio: até -100%
-- Repositório bem estruturado e organizado: até 10%
-- Linguagem com conceitos originais/interessantes: até +15%
-- Testes unitários: até +15%, dependendo da cobertura
+## Estrutura do Projeto
 
-Após aplicar todos os bônus, a nota é truncada no intervalo 0-100%. 
+```text
+pddl_parser/
+├── exemplos/                # Arquivos de exemplo .pddl
+│   ├── domain_helloworld.pddl
+│   └── problem_helloworld.pddl
+├── src/
+│   ├── lexer.py             # Analisador Léxico
+│   ├── parser.py            # Analisador Sintático (recursivo descendente)
+│   ├── main.py        # Enumeração de códigos de tokens
+│   └── ast.py               # Representação da Árvore Sintática Abstrata (AST)
+├── parser_interativo.py                  # Ponto de entrada principal
+├── README.md                # Documentação do projeto
+```
+
+## Como rodar
+Clone o repositório:
+```bash
+git clone https://github.com/VHbernardes/trab_final_compiladores.git
+```
+Para executar a ferramenta e interagir com os parsers, navegue até a raiz do repositório (pddl_parser/) e execute o script parser_interativo.py:
+```bash
+cd pddl_parser
+python3 parser_interativo.py
+```
+O programa apresentará um menu interativo com as seguintes opções:
+
+- Opções 1 a 5: Executam exemplos válidos de arquivos PDDL, analisando tanto o domínio (.pddl) quanto o problema (.pddl) associado. A saída mostrará os logs detalhados do processo de análise sintática.
+- Opção 6 - Exemplos Inválidos: Permite escolher arquivos PDDL que contêm erros sintáticos intencionais. O parser tentará analisá-los e reportará a falha, demonstrando sua capacidade de detecção de erros.
+- Opção 7 - Gerar AST de um exemplo: Permite escolher um exemplo válido para que o parser gere e imprima a Árvore de Sintaxe Abstrata (AST) correspondente ao arquivo PDDL.
+- Opção 0 - Sair: Encerra o programa.
+
+## Exemplos
+A pasta exemplos/ contém arquivos PDDL com diferentes características:
+
+- domain_helloworld.pddl / problem_helloworld.pddl: Exemplos mínimos para teste básico.
+- domain_blocks.pddl / problem_blocks.pddl: Domínio e problema clássicos do "Mundo dos Blocos", demonstrando tipos, predicados e ações mais complexas.
+- domain_brainfuck.pddl / problem_brainfuck.pddl: Exemplos criativos que modelam a lógica de uma máquina Brainfuck usando a sintaxe PDDL. Demonstram a flexibilidade sintática do PDDL e a - capacidade do parser de analisar estruturas diversas.
+- domain_json.pddl / problem_json.pddl: Exemplos que modelam a manipulação de uma estrutura JSON usando a sintaxe PDDL.
+- domain_lights.pddl / problem_lights.pddl: Domínio e problema de controle de luzes.
+- domain_blocks_invalido.pddl: Exemplo com um erro sintático (ex: parêntese ausente, palavra-chave malformada) que o parser deve detectar.
+- domain_json_invalido.pddl: Exemplo com outro tipo de erro sintático (ex: estrutura incorreta de um predicado) que o parser deve detectar.
+
+
+Estrutura do Código
+parser_interativo.py: É o script principal que fornece o menu interativo e orquestra a execução das funcionalidades do analisador.
+
+src/: Contém os módulos principais do analisador:
+
+lexer.py: Implementa a Análise Léxica. É responsável por ler o arquivo PDDL e dividi-lo em uma sequência de tokens (palavras-chave, identificadores, parênteses, operadores, etc.). Utiliza expressões regulares para o reconhecimento dos padrões de tokens.
+
+parser.py: Implementa a Análise Sintática utilizando uma abordagem de Descida Recursiva manual. Cada regra gramatical PDDL (como define, domain, action) é representada por um método. Este módulo valida a estrutura do PDDL e imprime logs detalhados do processo de reconhecimento sintático.
+
+main.py: Atua como um ponto de entrada para a funcionalidade principal do parser, especialmente para a geração da AST. A função parse_to_ast (importada por parser_interativo.py) está localizada aqui e é responsável por construir a Árvore de Sintaxe Abstrata (AST) a partir do código PDDL, representando-o como uma estrutura de dados aninhada (dicionários e listas Python) para posterior análise ou visualização.
+
+Etapas de Compilação Implementadas
+O projeto foca e implementa as duas primeiras fases essenciais de um compilador:
+
+Análise Léxica: Realizada pelo módulo lexer.py. Converte a cadeia de caracteres do código fonte PDDL em uma sequência de tokens.
+
+Análise Sintática: Realizada pelo módulo parser.py. Verifica se a sequência de tokens está em conformidade com as regras gramaticais do PDDL, garantindo que o código está estruturado corretamente. Parte dessa fase também é a construção da AST realizada através da função parse_to_ast (em src/main.py), que representa a estrutura hierárquica do código.
+
+Bugs, Limitações e Problemas Conhecidos
+Cobertura PDDL: O parser implementa um subconjunto da linguagem PDDL, focando nas seções mais comuns (:requirements, :types, :constants, :predicates, :actions, :domain, :objects, :init, :goal, :metric). Seções mais complexas ou menos comuns (como :durative-action, :derived, :functions completas, ou expressões numéricas e lógicas mais avançadas) podem não estar totalmente implementadas.
+
+Análise Semântica: O projeto não inclui uma fase de análise semântica. Isso significa que ele não verifica o significado ou a consistência do PDDL (ex: se um tipo usado foi declarado, se um predicado existe antes de ser usado, ou se a lógica do domínio faz sentido para um planejador). O problem_missing_goal.pddl (que é sintaticamente válido, mas semanticamente incompleto) é um exemplo que ilustra essa limitação e a distinção entre análise sintática e semântica.
+
+Recuperação de Erros: As mensagens de erro são úteis, indicando o tipo de token esperado/inesperado e a linha/coluna. No entanto, o parsing para na primeira falha, sem tentar se recuperar para encontrar outros erros.
+
+Geração de AST: A AST gerada (json.dumps em gerar_ast()) é uma representação em dicionários/listas Python. Para um compilador completo, ela pode precisar de uma estrutura de classes de nós mais formal.
+
+## Referências
+
+- Crafting Interpreters (Bob Nystrom)
+- Documentação Oficial do PDDL: Descreva qual versão ou documentação você consultou para entender a sintaxe e a estrutura da linguagem (ex: PDDL 1.2, PDDL 2.1).
