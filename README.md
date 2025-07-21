@@ -3,7 +3,7 @@
 |Matrícula | Aluno | Turma |
 | -- | -- | -- |
 | 22/2029243  | Victor Hugo dos Santos Bernardes | 16h |
-| x | x | x |
+| 20/2015868 | Alexandre Lema Xavier Júnior | 18h |
 
 ## Sobre o Projeto
 
