@@ -7,7 +7,9 @@
 
 ## Sobre o Projeto
 
-Este projeto implementa um Analisador Léxico (Lexer) e um Analisador Sintático (Parser) para a linguagem PDDL (Planning Domain Definition Language). O PDDL é uma linguagem de domínio específico (DSL) amplamente utilizada em Inteligência Artificial para descrever problemas de planejamento automático, definindo os estados do mundo, as ações possíveis e os objetivos a serem alcançados.
+Este projeto implementa um Analisador Léxico (Lexer) e um Analisador Sintático (Parser) para a linguagem PDDL (Planning Domain Definition Language). O objetivo é validar a estrutura sintática dos arquivos `domain.pddl` e `problem.pddl`, utilizados na definição de domínios e problemas em planejadores automáticos. 
+
+A ferramenta realiza a Análise Léxica e a Análise Sintática, detectando e reportando erros estruturais com base nas regras da linguagem PDDL.
 
 A ferramenta desenvolvida é capaz de:
 
